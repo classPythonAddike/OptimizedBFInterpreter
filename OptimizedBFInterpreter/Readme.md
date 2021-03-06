@@ -10,8 +10,7 @@ The BrainF code used for testing can be found [here](https://github.com/fabianis
 
 The base for all time savings calculations are taken with the time taken to execute when compiled with Debug Mode as the base.
 
-Initial Speed: 6:30 minutes
-
-Net Time Savings (as of now): 4:45 minutes
+- Initial Speed: 6:30 minutes
+- Net Time Savings (as of now): 4:45 minutes
 
 1) Compiled With Release Mode: 1:45 minutes

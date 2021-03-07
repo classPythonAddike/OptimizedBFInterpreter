@@ -11,7 +11,7 @@ namespace BFInterpreter
 		static void Main(string[] args)
 		{
 			BFReader reader = new BFReader();
-			string BFCode = reader.getCode(args[0]);
+			string BFCode = reader.GetCode(args[0]);
 
 			//Start the timer
 			DateTime start = DateTime.Now;

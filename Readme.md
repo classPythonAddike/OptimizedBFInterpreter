@@ -45,5 +45,6 @@ Instruction('+', 14)
 Instruction('>', 11)
 Instruction('-', 10)
 Instruction('.', 6)
-``` Shortening it from 42 commands, to just 5! However, this did not reduce the execution time at all. But I
+```
+Shortening it from 42 commands, to just 5! However, this did not reduce the execution time at all. But I
 left it at that, because the next optimization would surely help it along.

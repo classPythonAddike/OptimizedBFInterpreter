@@ -11,7 +11,7 @@ namespace OptimizedBFInterpreter
 		public static int pointer = 0;
 		public static List<int> memory_blocks = new List<int>();
 
-		public void Execute(string code)
+		public void Execute(List<Instruction> code)
 		{
 			//Initialise the memory blocks
 			memory_blocks.Add(0);
@@ -19,48 +19,52 @@ namespace OptimizedBFInterpreter
 			ParseBF(code);
 		}
 
-		public void ParseBF(string code)
+		public void ParseBF(List<Instruction> code)
 		{
 			int CurrentChar = 0, NumLoops, CharCopy;
 			//    Current Command, Stack, Command to start with in case of a loop
 			char chr; // Input char for ','
+            int code_length = 0;
+            Instruction instruct;
 
-			while (CurrentChar != code.Length)
+            foreach (Instruction i in code)
+            {
+                code_length += 1;
+            }
+
+			while (CurrentChar != code_length)
 			{
-				if (code[CurrentChar] == '+')
+                instruct = code[CurrentChar];
+
+                if (instruct.command == '+')
 				{
-					memory_blocks[pointer] += 1;
+					memory_blocks[pointer] += instruct.magnitude;
 				}
-				else if (code[CurrentChar] == '-')
+				else if (instruct.command == '-')
 				{
-					memory_blocks[pointer] -= 1;
+					memory_blocks[pointer] -= instruct.magnitude;
 				}
-				else if (code[CurrentChar] == '>')
+				else if (instruct.command == '>')
 				{
-					pointer += 1;
+					pointer += instruct.magnitude;
 				}
-				else if (code[CurrentChar] == '<')
+				else if (instruct.command == '<')
 				{
-					pointer -= 1;
+					pointer -= instruct.magnitude;
 				}
-				else if (code[CurrentChar] == '.')
+				else if (instruct.command == '.')
 				{
-					Console.Write((char)memory_blocks[pointer]);
+                    for (int i = 0; i < instruct.magnitude; i++)
+                    {
+                        Console.Write((char)memory_blocks[pointer]);
+                    }
 				}
-				else if (code[CurrentChar] == ',')
+				else if (instruct.command == ',')
 				{
-					chr = Console.ReadKey().ToString().ToCharArray()[0];
-					memory_blocks[pointer] = (int)chr;
+                    chr = Console.ReadKey().ToString()[0];
+                    memory_blocks[pointer] = (int)chr;
 				}
-				else if (code[CurrentChar] == '/')
-				{
-					CurrentChar++;
-					while (code[CurrentChar] != '/')
-					{
-						CurrentChar++;
-					}
-				}
-				else if (code[CurrentChar] == '[')
+				else if (instruct.command == '[')
 				{
 					NumLoops = 1;
 					CharCopy = CurrentChar + 1;
@@ -68,11 +72,11 @@ namespace OptimizedBFInterpreter
 					while (NumLoops != 0)
 					{
 						CurrentChar += 1;
-						if (code[CurrentChar] == '[')
+						if (code[CurrentChar].command == '[')
 						{
 							NumLoops += 1;
 						}
-						else if (code[CurrentChar] == ']')
+						else if (code[CurrentChar].command == ']')
 						{
 							NumLoops -= 1;
 						}
@@ -80,7 +84,7 @@ namespace OptimizedBFInterpreter
 
 					while (memory_blocks[pointer] != 0)
 					{
-						ParseBF(code.Substring(CharCopy, CurrentChar - CharCopy));
+						ParseBF(code.GetRange(CharCopy, CurrentChar - CharCopy));
 					}
 				}
 

@@ -2,21 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using OptimizedBFInterpreter;
 
-namespace BFInterpreter
+namespace OptimizedBFInterpreter
 {
 	class Program
 	{
 		static void Main(string[] args)
 		{
+            List<Instruction> BFCode;
 			BFReader reader = new BFReader();
-			string BFCode = reader.GetCode(args[0]);
 
-			//Start the timer
-			DateTime start = DateTime.Now;
+            //Start the timer
+            DateTime start = DateTime.Now;
 
-			try
+            try
+            {
+                BFCode = reader.GetCode(args[0]);
+            }
+            catch
+            {
+                BFCode = reader.GetCode("mandelbrot.bf");
+            }
+            
+            try
 			{
 				Parser parser = new Parser();
 				parser.Execute(BFCode); // Execute the code
